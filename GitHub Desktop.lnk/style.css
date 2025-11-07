@@ -1,0 +1,26 @@
+/*
+Theme Name: Kurumsal Next Dark
+Theme URI: https://www.hyzsoft.com
+Author: Hasan Yıldız
+Author URI: https://www.hyzsoft.com
+Description: HTML şablonundan dönüştürülmüş, kurumsal ve modern bir WordPress teması.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: custom-background, custom-colors, custom-header, full-width-template, one-column, accessibility-ready
+Text Domain: kurumsal-next-dark
+*/
+
+/* Geri kalan özel CSS kodların buraya gelecek. */
+
+/* WordPress Admin Bar'ın Neden Olduğu Üst Boşluğu Giderme */
+/* Body etiketine uygulanan margin-top'u sıfırlıyoruz */
+body.logged-in {
+    margin-top: 0 !important;
+}
+
+/* Yönetici çubuğunu sabit olarak kullanıyorsak ve içeriği kaydırmasını istemiyorsak */
+/* Body'e uygulanan margin-top'u html etiketine de sıfırlamak faydalı olabilir */
+html.wp-toolbar {
+    margin-top: 0 !important;
+}
