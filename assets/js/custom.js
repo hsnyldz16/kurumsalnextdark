@@ -29,6 +29,21 @@ $(document).ready(function () {
         'transition': 'all 0.6s ease'
     });
 
+    // Filter functionality
+    $('.filter-btn').click(function() {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+        
+        const filter = $(this).data('filter');
+        
+        if (filter === 'all') {
+            $('.project-item').fadeIn(400);
+        } else {
+            $('.project-item').fadeOut(400);
+            $('.project-item[data-category="' + filter + '"]').fadeIn(400);
+        }
+    });
+
     $(window).scroll(animateOnScroll);
     animateOnScroll();
 
@@ -44,8 +59,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    animateCounter();
 });
 
 // Animate elements on scroll
