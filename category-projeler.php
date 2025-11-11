@@ -160,8 +160,7 @@ endif;
             <?php 
                 endwhile;
             else : 
-            ?>
-                <p>Gösterilecek proje bulunmamaktadır.</p>
+            ?> <p>Gösterilecek proje bulunmamaktadır.</p>
             <?php endif; // Döngü Sonu ?>
         </div>
     </div>

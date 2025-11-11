@@ -86,4 +86,80 @@ function kurumsal_next_theme_setup() {
 }
 add_action( 'after_setup_theme', 'kurumsal_next_theme_setup' );
 
+function custom_theme_customize_register( $wp_customize ) {
+    
+    // 1. Yeni Bölüm Oluşturma
+    $wp_customize->add_section( 'map_settings_section', array(
+        'title'    => __( 'Harita ve İletişim Kodları', 'text-domain' ),
+        'priority' => 30, // Konumunu belirler
+    ));
+
+    // 2. Iframe Kodu İçin Ayar (Setting) Ekleme
+    $wp_customize->add_setting( 'contact_map_iframe_code', array(
+        'default'           => '', // Varsayılan boş bırakılabilir
+        'sanitize_callback' => 'wp_kses_post', // HTML'i güvenli bir şekilde kaydetme
+        'type'              => 'theme_mod',
+    ));
+    
+
+    // 3. Kontrol Alanı (Control) Ekleme (Textarea)
+    $wp_customize->add_control( 'contact_map_iframe_code_control', array(
+        'label'    => __( 'Google Harita Iframe Kodu', 'text-domain' ),
+        'description' => __( 'Google Haritalar\'dan aldığınız tam iframe kodunu buraya yapıştırın.', 'text-domain' ),
+        'section'  => 'map_settings_section',
+        'settings' => 'contact_map_iframe_code',
+        'type'     => 'textarea', // Textarea kullanıyoruz
+    ));
+
+    // YENİ AYAR: Adres Metni
+    $wp_customize->add_setting( 'contact_address_text', array(
+        'default'           => "Lütfen bir adres giriniz", // Varsayılan adres
+        'sanitize_callback' => 'wp_kses_post', // HTML ve satır sonlarını güvenli bir şekilde kaydetme
+        'type'              => 'theme_mod',
+    ));
+
+    // YENİ KONTROL: Adres Metin Alanı
+    $wp_customize->add_control( 'contact_address_text_control', array(
+        'label'    => __( 'Kurumsal Adres Metni', 'text-domain' ),
+        'description' => __( 'Adresi satır satır yazınız. Her satır otomatik olarak <br> etiketi ile ayrılacaktır.', 'text-domain' ),
+        'section'  => 'map_settings_section',
+        'settings' => 'contact_address_text',
+        'type'     => 'textarea', 
+    ));
+
+    // YENİ AYAR: Telefonlar
+    $wp_customize->add_setting( 'contact_phone_text', array(
+        'default'           => "Html formatında telefon bilgisini girebilirsiniz", // Varsayılan adres
+        'sanitize_callback' => 'wp_kses_post', // HTML ve satır sonlarını güvenli bir şekilde kaydetme
+        'type'              => 'theme_mod',
+    ));
+
+    // YENİ KONTROL: Telefonlar Metin Alanı
+    $wp_customize->add_control( 'contact_phone_text_control', array(
+        'label'    => __( 'Telefon HTML', 'text-domain' ),
+        'description' => __( 'HTML Şablonda telefon bilginizi girebilirsiniz.', 'text-domain' ),
+        'section'  => 'map_settings_section',
+        'settings' => 'contact_phone_text',
+        'type'     => 'textarea', 
+    ));
+
+        // YENİ AYAR: E-Postlar
+    $wp_customize->add_setting( 'contact_email_text', array(
+        'default'           => "Html formatında e-mail bilgisini girebilirsiniz", // Varsayılan adres
+        'sanitize_callback' => 'wp_kses_post', // HTML ve satır sonlarını güvenli bir şekilde kaydetme
+        'type'              => 'theme_mod',
+    ));
+
+    // YENİ KONTROL: Telefonlar Metin Alanı
+    $wp_customize->add_control( 'contact_emaile_text_control', array(
+        'label'    => __( 'E-Posta HTML', 'text-domain' ),
+        'description' => __( 'HTML şablonda email bilginizi girebilirsiniz', 'text-domain' ),
+        'section'  => 'map_settings_section',
+        'settings' => 'contact_email_text',
+        'type'     => 'textarea', 
+    ));
+
+    
+}
+add_action( 'customize_register', 'custom_theme_customize_register' );
 ?>

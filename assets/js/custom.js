@@ -48,7 +48,7 @@ $(document).ready(function () {
     animateOnScroll();
 
     // Active navigation highlight
-    $(window).scroll(function () {
+    /*$(window).scroll(function () {
         var scrollPos = $(document).scrollTop();
         $('.navbar-nav a').each(function () {
             var currLink = $(this);
@@ -58,6 +58,20 @@ $(document).ready(function () {
                 currLink.addClass("active");
             }
         });
+    });*/
+
+    // Phone number formatting
+    $('#phone').on('input', function() {
+        let value = $(this).val().replace(/\D/g, '');
+        if (value.length > 0) {
+            if (value.startsWith('90')) {
+                value = value.substring(2);
+            }
+            if (value.length <= 10) {
+                const formatted = value.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, '($1) $2 $3 $4');
+                $(this).val('+90 ' + formatted.trim());
+            }
+        }
     });
 });
 
