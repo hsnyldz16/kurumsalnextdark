@@ -110,17 +110,17 @@ get_header(); // Header'ı çağırır
         <p class="section-subtitle">Bursa Organize Sanayi Bölgesinde modern tesisimizde sizleri ağırlamaktan mutluluk duyarız</p>
         
         <div class="map-container">
-            <iframe src=" <?php 
-        // 1. Özelleştiriciden kaydedilen kodu çek
-        $iframe_code = get_theme_mod( 'contact_map_iframe_code' );
-        
-        if ( $iframe_code ) {
-            // 2. Kodu ekrana bas (wp_kses_post ile zaten temizlenmişti)
-            echo $iframe_code;
-        } else {
-            // 3. Eğer kod yoksa kullanıcıyı uyaran bir mesaj gösterebiliriz
-            echo '<p>Lütfen Harita iframe kodunu Özelleştirici ayarlarından girin.</p>';
-        }
+            <iframe src="<?php 
+                // 1. Özelleştiriciden kaydedilen kodu çek
+                $iframe_code = get_theme_mod( 'contact_map_iframe_code' );
+                
+                if ( $iframe_code ) {
+                    // 2. Kodu ekrana bas (wp_kses_post ile zaten temizlenmişti)
+                    echo $iframe_code;
+                } else {
+                    // 3. Eğer kod yoksa kullanıcıyı uyaran bir mesaj gösterebiliriz
+                    echo '<p>Lütfen Harita iframe kodunu Özelleştirici ayarlarından girin.</p>';
+                }
         ?>" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
