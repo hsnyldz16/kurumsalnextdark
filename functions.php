@@ -13,40 +13,51 @@ if ( ! file_exists( get_template_directory() . '/wp-bootstrap-navwalker.php' ) )
 
 function kurumsal_next_scripts() {
     
-    // Tema yolunu alıyoruz (tekrar tekrar kullanmak için bir değişkene atayalım)
+    // Tema yolunu alıyoruz
     $theme_uri = get_template_directory_uri(); 
 
-    // --- 1. STİL DOSYALARI (CSS) ---
-
-    // Bootstrap CSS 5.3.2 (Lokalden Çekiyorsanız)
-    wp_enqueue_style( 'bootstrap-css', $theme_uri . '/assets/css/bootstrap.min.css', array(), '5.3.2' );
-    
-    // Font Awesome 6.5.1
-    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1' );
-
-    // KENDİ ÖZEL CSS DOSYAMIZ
-    wp_enqueue_style( 'kurumsal-next-custom', $theme_uri . '/assets/css/custom.css', array('bootstrap-css', 'font-awesome'), '1.0' );
-
     // -----------------------------------------------------------------------
+    // !!! TEMANIN KENDİ JQUERY DOSYASINI KULLANMA !!!
+    // -----------------------------------------------------------------------
+    
+    // 1. WordPress'in varsayılan jQuery kaydını sil.
+    wp_deregister_script( 'jquery' );
+    
+    // 2. Kendi jQuery dosyanızı, 'jquery' handle'ı ile, temanızın içindeki yoldan yeniden kaydet.
+    // Artık 'jquery' handle'ı, temanızdaki kopyaya işaret ediyor.
+    wp_register_script( 
+        'jquery', 
+        $theme_uri . '/assets/js/jquery.min.js', 
+        array(), // Bağımlılık yok
+        '1.0', // Sizin verdiğiniz versiyon
+        true 
+    );
+    
+    // 3. Yeniden kaydettiğiniz 'jquery' handle'ını yükle (enqueue).
+    wp_enqueue_script( 'jquery' );
+    
+    // -----------------------------------------------------------------------
+
+    // --- 1. STİL DOSYALARI (CSS) ---
+    // ... (CSS kodlarınız buraya) ...
+    wp_enqueue_style( 'bootstrap-css', $theme_uri . '/assets/css/bootstrap.min.css', array(), '5.3.2' );
+    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1' );
+    wp_enqueue_style( 'kurumsal-next-custom', $theme_uri . '/assets/css/custom.css', array('bootstrap-css', 'font-awesome'), '1.0' );
     
     // --- 2. JAVASCRIPT DOSYALARI (JS) ---
 
-    // A. WordPress'in kendi jQuery'sini yüklüyoruz.
-    wp_enqueue_script( 'jquery' );
-    
-    // B. Bootstrap 5.3.2 JS Bundle (!! KAYIP SATIR BURADA !! - CDN'den çekiliyor varsayımıyla)
-    // ÖNEMLİ: Bu script'in handle'ı 'bootstrap-js' olmalıdır!
+    // A. Bootstrap 5.3.2 JS Bundle (CDN'den çekiliyor)
+    // Bu kısım, artık yukarıda kaydettiğimiz 'jquery' handle'ına bağımlı.
     wp_enqueue_script( 'bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.2', true );
     
     
-    // C. KENDİ ÖZEL JAVASCRIPT KODUMUZ (custom.js)
-    // Artık 'bootstrap-js' tanımlandığı için bu dosya yüklenecektir.
+    // B. KENDİ ÖZEL JAVASCRIPT KODUMUZ (custom.js)
     wp_enqueue_script( 
-        'kurumsal-next-js', // 1. Scriptimizin benzersiz adı (handle)
-        $theme_uri . '/assets/js/custom.js', // 2. Dosyanın TAM YOLU
-        array('jquery', 'bootstrap-js'), // 3. Bağımlılıklar (Şimdi B satırına bağımlı)
-        '1.0', // 4. Versiyon numarası
-        true // 5. Önemli: True = Scripti footer'a yükle.
+        'kurumsal-next-js', 
+        $theme_uri . '/assets/js/custom.js', 
+        array('jquery', 'bootstrap-js'), 
+        '1.0', 
+        true 
     );
 
 }

@@ -95,48 +95,90 @@
     </div>
 </section>
 
-<!-- Projects Section -->
-<section class="projects-section" id="projeler">
+<!-- News Section -->
+<section class="news-section" id="haberler">
     <div class="container">
-        <h2 class="section-title">PROJELER</h2>
+        <h2 class="section-title">HABERLER & DUYURULAR</h2>
         <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="project-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/project1.jpg" alt="Project 1">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>Hassas Parça Üretimi</h4>
-                            <p>CNC teknolojisi ile yüksek hassasiyetli üretim</p>
+
+            <!-- News Loop -->
+            <div class="row g-4">
+                <?php
+                // 1. WP_Query Argümanları: Son 3 yazıyı 'haberler' kategorisinden çek
+                $args = array(
+                    'post_type'      => 'post',        // Varsayılan yazı türü
+                    'category_name'  => 'haberler',    // Kategorinin kısa adı (slug)
+                    'posts_per_page' => 3,             // Gösterilecek yazı sayısı
+                    'post_status'    => 'publish',     // Sadece yayınlanmış yazıları getir
+                    'orderby'        => 'date',        // Sıralama kriteri: 'date' (post_date kolonu)
+                    'order'          => 'DESC'         // Sıralama yönü: 'DESC' (büyükten küçüğe, en yeni en üstte)
+                );
+
+                // 2. Yeni Sorguyu (Query) Başlat
+                $the_query = new WP_Query( $args );
+
+                // 3. WordPress Döngüsü Başlangıcı
+                if ( $the_query->have_posts() ) :
+                    while ( $the_query->have_posts() ) : $the_query->the_post();
+                ?><div class="col-lg-4 col-md-6">
+                        <div class="news-card">
+                            <div class="news-image-wrapper">
+                                <?php 
+                                // Öne Çıkarılmış Görsel (Featured Image)
+                                if ( has_post_thumbnail() ) {
+                                    the_post_thumbnail( 'large', array( 'class' => 'news-image' ) );
+                                } else {
+                                    // Öne çıkarılmış görsel yoksa varsayılan bir görsel basılabilir
+                                    echo '<img src="' . get_template_directory_uri() . '/assets/img/default-news.jpg" alt="' . get_the_title() . '" class="news-image">';
+                                }
+                                ?>
+                                
+                                <span class="news-date">
+                                    <i class="far fa-calendar"></i> 
+                                    <?php 
+                                    // Yayın Tarihi (Örn: 10 Kas 2024)
+                                    echo get_the_date( 'd M Y' ); 
+                                    ?>
+                                </span>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title"><?php the_title(); ?></h3>
+                                <p class="news-excerpt">
+                                    <?php 
+                                    // Yazı Özeti (excerpt) veya içerikten kısa bir bölüm
+                                    // 15 kelimelik özet çek
+                                    echo wp_trim_words( get_the_excerpt(), 15, '...' ); 
+                                    ?>
+                                </p>
+                                <div class="mt-3">
+                                    <a href="<?php the_permalink(); ?>" class="btn-read-more">
+                                        Devamını Oku <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php
+                    endwhile;
+                else :
+                    // Eğer hiç yazı bulunamazsa bu mesaj gösterilir
+                    echo '<p class="col-12 text-center">Şu anda yayınlanmış haber bulunmamaktadır.</p>';
+                endif;
+
+                // 4. Ana Sorgu (Main Query) Verilerini Geri Yükle
+                wp_reset_postdata();
+                ?>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="project-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/project2.jpg"  alt="Project 2">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>Kalıp Tasarımı</h4>
-                            <p>Özel endüstriyel kalıp çözümleri</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="project-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/project3.jpg"  alt="Project 3">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>Özel İmalat</h4>
-                            <p>Müşteri odaklı özel üretim çözümleri</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- News Loop End -->
         </div>
-        <div class="text-center">
-            <button class="btn btn-custom btn-lg btn-view-all">Tüm Projeler</button>
+
+        <!-- All News Button -->
+        <div class="text-center mt-5">
+            <a href="haberler.html" class="btn btn-custom btn-lg">
+                <i class="fas fa-newspaper me-2"></i> Tüm Haberleri Görüntüle
+            </a>
         </div>
     </div>
 </section>
+
 <?php get_footer(); ?>

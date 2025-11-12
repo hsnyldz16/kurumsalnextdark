@@ -31,6 +31,7 @@ $(document).ready(function () {
 
     // Filter functionality
     $('.filter-btn').click(function() {
+
         $('.filter-btn').removeClass('active');
         $(this).addClass('active');
         
@@ -47,18 +48,7 @@ $(document).ready(function () {
     $(window).scroll(animateOnScroll);
     animateOnScroll();
 
-    // Active navigation highlight
-    /*$(window).scroll(function () {
-        var scrollPos = $(document).scrollTop();
-        $('.navbar-nav a').each(function () {
-            var currLink = $(this);
-            var refElement = $(currLink.attr("href"));
-            if (refElement.length && refElement.position().top - 100 <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-                $('.navbar-nav a').removeClass("active");
-                currLink.addClass("active");
-            }
-        });
-    });*/
+    
 
     // Phone number formatting
     $('#phone').on('input', function() {
@@ -73,6 +63,8 @@ $(document).ready(function () {
             }
         }
     });
+
+    animateCounter();
 });
 
 // Animate elements on scroll

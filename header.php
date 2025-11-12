@@ -14,7 +14,8 @@
     <div class="container">
 
         <a class="navbar-brand" href="<?php echo home_url(); ?>">
-            <i class="fas fa-industry me-2"></i><?php bloginfo('name'); ?>
+            <?php  echo '<img height="25" src="' . get_template_directory_uri() . '/assets/images/kurumsalNext.png" alt="' . get_the_title() . '">'; ?>
+            <!--<i class="fas fa-industry me-2"></i><?php bloginfo('name'); ?>-->
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
